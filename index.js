@@ -7,13 +7,14 @@ const { argv } = yargs(hideBin(process.argv))
     .option('name', { describe: 'CLI名を表示' })
     .option('file', { describe: 'Markdownファイルへのパス' });
 
-const packageStr = fs.readFileSync(path.resolve(__dirname, 'package.json'), { encoding: 'utf-8'});
-const package = JSON.parse(packageStr);
-
-if(argv.file) {
-    console.log(argv.file);
-} else if(argv.name) {
+if(argv.name) {
+    const packageStr = fs.readFileSync(path.resolve(__dirname, 'package.json'), { encoding: 'utf-8'});
+    const package = JSON.parse(packageStr);
+    
     console.log(package.name);
-} else {
-    console.log('optionがありません');
+
+    process.exit(0);
 }
+
+const markdownStr = fs.readFileSync(path.resolve(__dirname, argv.file), { encoding: 'utf-8'});
+console.log(markdownStr);
